@@ -1,12 +1,5 @@
 import { ArrowBackIcon } from "@chakra-ui/icons";
-import {
-	Box,
-	Grid,
-	GridItem,
-	Heading,
-	IconButton,
-	Spacer,
-} from "@chakra-ui/react";
+import { Grid, GridItem, Heading, IconButton, Spacer } from "@chakra-ui/react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export function Header() {
