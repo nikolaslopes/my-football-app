@@ -1,63 +1,50 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useMatches } from "../../hooks/useMatches";
+
+import type { MatchDomain } from "../../entities/Match/MatchDomain";
+import type { TeamDomain } from "../../entities/Team/TeamDomain";
+import { useChampionshipMatches } from "../../hooks/useChampionshipMatches";
 import { useScrollToTop } from "../../hooks/useScrollToTop";
-
-interface Team {
-	tla: string;
-	shortName: string;
-}
-
-interface Match {
-	id: number;
-	matchday: number;
-	homeTeam: { shortName: string; crest: string; tla: string };
-	awayTeam: { shortName: string; crest: string; tla: string };
-	utcDate: string;
-	competition: {
-		name: string;
-	};
-}
 
 export function useChampionshipDetails() {
 	const { id } = useParams();
 
-	const { matches = [], competition, isFetching } = useMatches(id);
+	const { matches = [], competition, isFetching } = useChampionshipMatches(id);
 
 	const { showScrollButton, handleScrollToTop } = useScrollToTop();
 
-	const [teams, setTeams] = useState<Team[]>([]);
+	const [teams, setTeams] = useState<TeamDomain[]>([]);
 	const [rounds, setRounds] = useState<number[]>([]);
-	const [selectedTeam, setSelectedTeam] = useState<Team | null>(null);
+	const [selectedTeam, setSelectedTeam] = useState<TeamDomain | null>(null);
 	const [selectedRound, setSelectedRound] = useState<string>("");
 
 	useEffect(() => {
 		if (matches.length > 0) {
 			const teamsSet = new Set<string>();
-			const teamsMap = new Map<string, Team>();
+			const teamsMap = new Map<string, TeamDomain>();
 			const roundsSet = new Set<number>();
 
-			matches.forEach((match: Match) => {
+			matches.forEach((match: MatchDomain) => {
 				if (!teamsSet.has(match.homeTeam.tla)) {
 					teamsSet.add(match.homeTeam.tla);
 					teamsMap.set(match.homeTeam.tla, {
 						tla: match.homeTeam.tla,
-						shortName: match.homeTeam.shortName,
+						name: match.homeTeam.name,
 					});
 				}
 				if (!teamsSet.has(match.awayTeam.tla)) {
 					teamsSet.add(match.awayTeam.tla);
 					teamsMap.set(match.awayTeam.tla, {
 						tla: match.awayTeam.tla,
-						shortName: match.awayTeam.shortName,
+						name: match.awayTeam.name,
 					});
 				}
 
-				roundsSet.add(match.matchday);
+				roundsSet.add(match.matchDay);
 			});
 
 			const sortedTeams = Array.from(teamsMap.values()).sort((a, b) =>
-				a.shortName.localeCompare(b.shortName),
+				a.name.localeCompare(b.name),
 			);
 
 			setTeams(sortedTeams);
@@ -66,20 +53,20 @@ export function useChampionshipDetails() {
 	}, [matches]);
 
 	const filteredMatches = matches.filter(
-		(match: Match) =>
+		(match: MatchDomain) =>
 			(!selectedTeam ||
 				match.homeTeam.tla === selectedTeam.tla ||
 				match.awayTeam.tla === selectedTeam.tla) &&
-			(!selectedRound || match.matchday === Number.parseInt(selectedRound)),
+			(!selectedRound || match.matchDay === Number.parseInt(selectedRound)),
 	);
 
 	const groupedMatches = filteredMatches.reduce(
-		(acc: { [key: number]: Match[] }, match: Match) => {
-			const { matchday } = match;
-			if (!acc[matchday]) {
-				acc[matchday] = [];
+		(acc: { [key: number]: MatchDomain[] }, match: MatchDomain) => {
+			const { matchDay } = match;
+			if (!acc[matchDay]) {
+				acc[matchDay] = [];
 			}
-			acc[matchday].push(match);
+			acc[matchDay].push(match);
 			return acc;
 		},
 		{},

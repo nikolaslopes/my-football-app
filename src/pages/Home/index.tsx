@@ -13,7 +13,9 @@ export function Home() {
 
 			<Box marginTop={"64px"}>
 				<Link to="championship">
-					<Button colorScheme="teal">Ver campeonatos</Button>
+					<Button colorScheme="teal" size="md">
+						Ver campeonatos
+					</Button>
 				</Link>
 			</Box>
 		</BaseLayout>

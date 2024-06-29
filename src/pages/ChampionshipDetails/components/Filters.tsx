@@ -1,18 +1,14 @@
 import { Select } from "@chakra-ui/react";
-
 import type { ChangeEvent } from "react";
 
-interface Team {
-	tla: string;
-	shortName: string;
-}
+import type { TeamDomain } from "../../../entities/Team/TeamDomain";
 
 interface FiltersProps {
-	teams: Team[];
+	teams: TeamDomain[];
 	rounds: number[];
-	selectedTeam: Team | null;
+	selectedTeam: TeamDomain | null;
 	selectedRound: string;
-	setSelectedTeam: (team: Team | null) => void;
+	setSelectedTeam: (team: TeamDomain | null) => void;
 	setSelectedRound: (round: string) => void;
 }
 
@@ -36,12 +32,17 @@ export function Filters({
 
 	return (
 		<>
-			<Select value={selectedTeam?.tla || ""} onChange={handleTeamChange}>
+			<Select
+				marginBottom="8px"
+				value={selectedTeam?.tla || ""}
+				onChange={handleTeamChange}
+				colorScheme="teal"
+			>
 				<option value="">Todas as Equipes</option>
 				{teams.map((team) => {
 					return (
 						<option key={team.tla} value={team.tla}>
-							{team.shortName}
+							{team.name}
 						</option>
 					);
 				})}

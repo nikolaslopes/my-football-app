@@ -2,12 +2,12 @@ import type { ChampionshipDomain } from "../../entities/Championship/Championshi
 import type { Championship } from "../../entities/Championship/default";
 
 class ChampionshipMapper {
-	toDomain(domainChampionship: Championship): ChampionshipDomain {
+	toDomain(persistenceChampionship: Championship): ChampionshipDomain {
 		return {
-			id: String(domainChampionship.id),
-			name: domainChampionship.name,
-			code: domainChampionship.code,
-			logo: domainChampionship.emblem,
+			id: String(persistenceChampionship.id),
+			name: persistenceChampionship.name,
+			code: persistenceChampionship.code,
+			logo: persistenceChampionship.emblem,
 		};
 	}
 }

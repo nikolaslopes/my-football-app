@@ -21,7 +21,7 @@ export function Header({ title }: HeaderProps) {
 			</Text>
 
 			<Link to="/championship">
-				<Button colorScheme="teal" size="xs" variant="outline">
+				<Button colorScheme="teal" size="sm" variant="outline">
 					Selecionar outro campeonato
 				</Button>
 			</Link>

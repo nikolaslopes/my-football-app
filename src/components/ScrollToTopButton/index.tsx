@@ -1,5 +1,5 @@
 import { ArrowUpIcon } from "@chakra-ui/icons";
-import { Box, Button } from "@chakra-ui/react";
+import { Box, IconButton } from "@chakra-ui/react";
 
 interface ScrollToTopButtonProps {
 	onScrollToTop: () => void;
@@ -8,13 +8,12 @@ interface ScrollToTopButtonProps {
 export function ScrollToTopButton({ onScrollToTop }: ScrollToTopButtonProps) {
 	return (
 		<Box position="fixed" bottom="20px" right="20px">
-			<Button
-				onClick={onScrollToTop}
-				leftIcon={<ArrowUpIcon />}
+			<IconButton
+				aria-label="Voltar ao topo"
+				icon={<ArrowUpIcon />}
 				colorScheme="teal"
-			>
-				Voltar ao topo
-			</Button>
+				onClick={onScrollToTop}
+			/>
 		</Box>
 	);
 }
