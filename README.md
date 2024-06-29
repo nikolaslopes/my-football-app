@@ -1,46 +1,82 @@
-# Getting Started with Create React App
+# Mt Football APP
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
 
-## Available Scripts
+The My Football APP is a web application that consumes the [Football Data Org](https://www.football-data.org/) API
 
-In the project directory, you can run:
+## Stacks
 
-### `npm start`
+- React
+- TypeScript
+- Chakra UI
+- React Router Dom
+- Axios
+- Lottie React
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Features
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- **List the main World's Championships**
+- **List all matches in all rounds from a Championship**
+- **Filter the matches by Team**
+- **Filter the matches by Round**
 
-### `npm test`
+## Prerequisites
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- [Node Version Manager (NVM)](https://github.com/nvm-sh/nvm)
 
-### `npm run build`
+## Deploy
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- You can see the project here: 🟢 [My Football APP](https://my-football-app.netlify.app/)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Installation
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Clone the repository:
 
-### `npm run eject`
+   ```sh
+   git clone https://github.com/nikolaslopes/my-football-app.git
+   cd my-football-app
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+2. This application uses the `Node version Manager (NVM)` to manage the Node.js version to avoid dependency conflict. To use the correct Node.js version, after having installed [NVM](https://github.com/nvm-sh/nvm), just run:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   ```**sh**
+   nvm use
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+3. Install the dependencies:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+   ```sh
+   npm install
+   ```
 
-## Learn More
+4. Add environment variables:
+    The [Football Data Org](https://www.football-data.org/) API needs a token to make authorize the requests. So you need to add your personal token to run the application. To do that you need:
+    - Create a `.env.local` in the project source
+    - Inside this file, past it:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+      ```
+        REACT_APP_API_URL=https://football-api-five.vercel.app
+        REACT_APP_API_TOKEN=FOOTBALL_API_PERSONAL_TOKEN
+      ```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+    - Now you just need to past your personal token in this var env: `REACT_APP_API_TOKEN=PASTE_YOUR_TOKEN_HERE`
+
+## Usage
+
+1. After install:
+
+   ```sh
+   npm start
+   ```
+
+## Preview
+
+<div align="center">
+  <img src=".github/preview.gif" alt="Preview" />
+</div>
+
+## Author
+
+[![Static Badge](https://img.shields.io/badge/nikolas%20lopes-c1c1c1?style=for-the-badge&logo=linkedin&label=linkedin&labelColor=2371B7)](https://www.linkedin.com/in/nikolaslopes/)
+
+[![Static Badge](https://img.shields.io/badge/nikolaslopes-c1c1c1?style=for-the-badge&logo=github&label=github&labelColor=%23222)](https://github.com/nikolaslopes)
