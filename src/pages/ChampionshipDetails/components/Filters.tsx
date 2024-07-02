@@ -30,6 +30,8 @@ export function Filters({
 		setSelectedRound(event.target.value);
 	}
 
+	console.log(rounds);
+
 	return (
 		<>
 			<Select
@@ -50,11 +52,13 @@ export function Filters({
 
 			<Select value={selectedRound} onChange={handleRoundChange}>
 				<option value="">Todas as Rodadas</option>
-				{rounds.map((round) => (
-					<option key={round} value={round.toString()}>
-						{round}ª Rodada
-					</option>
-				))}
+				{rounds.map((round) =>
+					round !== null ? (
+						<option key={round} value={round?.toString()}>
+							{round}ª Rodada
+						</option>
+					) : null,
+				)}
 			</Select>
 		</>
 	);
