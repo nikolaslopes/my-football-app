@@ -1,5 +1,5 @@
 export type Team = {
-	name: string;
+	shortName: string;
 	tla: string;
 	crest: string;
 };

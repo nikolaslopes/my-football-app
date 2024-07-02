@@ -8,12 +8,12 @@ class ChampionshipMatchMapper {
 			date: persistenceChampionshipMatch.utcDate,
 			matchDay: persistenceChampionshipMatch.matchday,
 			homeTeam: {
-				name: persistenceChampionshipMatch.homeTeam.name,
+				name: persistenceChampionshipMatch.homeTeam.shortName,
 				logo: persistenceChampionshipMatch.homeTeam.crest,
 				tla: persistenceChampionshipMatch.homeTeam.tla,
 			},
 			awayTeam: {
-				name: persistenceChampionshipMatch.awayTeam.name,
+				name: persistenceChampionshipMatch.awayTeam.shortName,
 				logo: persistenceChampionshipMatch.awayTeam.crest,
 				tla: persistenceChampionshipMatch.awayTeam.tla,
 			},
