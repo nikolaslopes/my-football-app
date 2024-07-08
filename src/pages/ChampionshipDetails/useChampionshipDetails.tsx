@@ -8,9 +8,7 @@ import { useScrollToTop } from "../../hooks/useScrollToTop";
 
 export function useChampionshipDetails() {
 	const { id } = useParams();
-
 	const { matches = [], competition, isFetching } = useChampionshipMatches(id);
-
 	const { showScrollButton, handleScrollToTop } = useScrollToTop();
 
 	const [teams, setTeams] = useState<TeamDomain[]>([]);
@@ -20,57 +18,46 @@ export function useChampionshipDetails() {
 
 	useEffect(() => {
 		if (matches.length > 0) {
-			const teamsSet = new Set<string>();
-			const teamsMap = new Map<string, TeamDomain>();
-			const roundsSet = new Set<number>();
+			const teamsList: TeamDomain[] = [];
+			const roundsList: number[] = [];
 
-			matches.forEach((match: MatchDomain) => {
-				if (!teamsSet.has(match.homeTeam.tla)) {
-					teamsSet.add(match.homeTeam.tla);
-					teamsMap.set(match.homeTeam.tla, {
-						tla: match.homeTeam.tla,
-						name: match.homeTeam.name,
-					});
-				}
-				if (!teamsSet.has(match.awayTeam.tla)) {
-					teamsSet.add(match.awayTeam.tla);
-					teamsMap.set(match.awayTeam.tla, {
-						tla: match.awayTeam.tla,
-						name: match.awayTeam.name,
-					});
+			matches.forEach(({ homeTeam, awayTeam, matchDay }: MatchDomain) => {
+				if (!teamsList.find((team) => team.tla === homeTeam.tla)) {
+					teamsList.push(homeTeam);
 				}
 
-				roundsSet.add(match.matchDay);
+				if (!teamsList.find((team) => team.tla === awayTeam.tla)) {
+					teamsList.push(awayTeam);
+				}
+
+				if (!roundsList.includes(matchDay)) {
+					roundsList.push(matchDay);
+				}
 			});
 
-			const sortedTeams = Array.from(teamsMap.values()).sort((a, b) =>
-				a.name.localeCompare(b.name),
-			);
-
-			setTeams(sortedTeams);
-			setRounds(Array.from(roundsSet).sort((a, b) => a - b));
+			setTeams(teamsList.sort((a, b) => a.name.localeCompare(b.name)));
+			setRounds(roundsList.sort((a, b) => a - b));
 		}
 	}, [matches]);
 
 	const filteredMatches = matches.filter(
-		(match: MatchDomain) =>
+		({ homeTeam, awayTeam, matchDay }: MatchDomain) =>
 			(!selectedTeam ||
-				match.homeTeam.tla === selectedTeam.tla ||
-				match.awayTeam.tla === selectedTeam.tla) &&
-			(!selectedRound || match.matchDay === Number.parseInt(selectedRound)),
+				homeTeam.tla === selectedTeam?.tla ||
+				awayTeam.tla === selectedTeam?.tla) &&
+			(!selectedRound || matchDay === Number.parseInt(selectedRound)),
 	);
 
-	const groupedMatches = filteredMatches.reduce(
-		(acc: { [key: number]: MatchDomain[] }, match: MatchDomain) => {
-			const { matchDay } = match;
-			if (!acc[matchDay]) {
-				acc[matchDay] = [];
-			}
-			acc[matchDay].push(match);
-			return acc;
-		},
-		{},
-	);
+	const groupedMatches = filteredMatches.reduce<{
+		[key: number]: MatchDomain[];
+	}>((acc, match) => {
+		const { matchDay } = match;
+		if (!acc[matchDay]) {
+			acc[matchDay] = [];
+		}
+		acc[matchDay].push(match);
+		return acc;
+	}, {});
 
 	return {
 		isFetching,
