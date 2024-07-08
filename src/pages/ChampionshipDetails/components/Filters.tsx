@@ -30,8 +30,6 @@ export function Filters({
 		setSelectedRound(event.target.value);
 	}
 
-	console.log(rounds);
-
 	return (
 		<>
 			<Select
