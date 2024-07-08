@@ -40,12 +40,24 @@ export function useChampionshipDetails() {
 		}
 	}, [matches]);
 
+	function matchByTeam(
+		match: MatchDomain,
+		selectedTeam: TeamDomain | null,
+	): boolean {
+		return (
+			!selectedTeam ||
+			match.homeTeam.tla === selectedTeam.tla ||
+			match.awayTeam.tla === selectedTeam.tla
+		);
+	}
+
+	function matchByRound(match: MatchDomain, selectedRound: string): boolean {
+		return !selectedRound || match.matchDay === Number.parseInt(selectedRound);
+	}
+
 	const filteredMatches = matches.filter(
-		({ homeTeam, awayTeam, matchDay }: MatchDomain) =>
-			(!selectedTeam ||
-				homeTeam.tla === selectedTeam?.tla ||
-				awayTeam.tla === selectedTeam?.tla) &&
-			(!selectedRound || matchDay === Number.parseInt(selectedRound)),
+		(match: MatchDomain) =>
+			matchByTeam(match, selectedTeam) && matchByRound(match, selectedRound),
 	);
 
 	const groupedMatches = filteredMatches.reduce<{
